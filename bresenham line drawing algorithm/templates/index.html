@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bresenham // Line Plotter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="scanlines"></div>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">▸</span>
+    <span class="brand-name">BRESENHAM</span>
+    <span class="brand-sub">/ integer-only line plotter</span>
+  </div>
+  <div class="topbar-meta">no floats · no trig · just addition</div>
+</header>
+
+<main class="layout">
+
+  <section class="panel panel-controls">
+    <h1 class="panel-title">Endpoints</h1>
+    <p class="panel-desc">Give two integer points. The algorithm walks the major axis one step at a time and uses a running error term to decide when the minor axis should move.</p>
+
+    <form id="line-form" class="coord-form">
+      <div class="coord-row">
+        <div class="field">
+          <label for="x1">x1</label>
+          <input type="number" id="x1" name="x1" value="4" required>
+        </div>
+        <div class="field">
+          <label for="y1">y1</label>
+          <input type="number" id="y1" name="y1" value="2" required>
+        </div>
+      </div>
+      <div class="coord-row">
+        <div class="field">
+          <label for="x2">x2</label>
+          <input type="number" id="x2" name="x2" value="8" required>
+        </div>
+        <div class="field">
+          <label for="y2">y2</label>
+          <input type="number" id="y2" name="y2" value="6" required>
+        </div>
+      </div>
+
+      <button type="submit" class="plot-btn">Plot line</button>
+    </form>
+
+    <div class="presets">
+      <span class="presets-label">Try:</span>
+      <button type="button" class="preset-btn" data-vals="35,40,43,45">slope &lt; 1</button>
+      <button type="button" class="preset-btn" data-vals="1,1,6,7">slope &gt; 1</button>
+      <button type="button" class="preset-btn" data-vals="4,2,8,6">slope = 1</button>
+    </div>
+
+    <div id="error-box" class="error-box" hidden></div>
+
+    <div class="log-wrap">
+      <h2 class="log-title">Decision log</h2>
+      <div id="log" class="log">
+        <p class="log-empty">Plot a line to see each step of the decision parameter.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel panel-table">
+    <div class="table-head">
+      <h1 class="panel-title">Decision table</h1>
+      <span id="point-count" class="point-count"></span>
+    </div>
+    <div class="table-wrap">
+      <table class="step-table">
+        <thead>
+          <tr>
+            <th>Step</th>
+            <th>Current x,y</th>
+            <th>p</th>
+            <th>Next x,y</th>
+          </tr>
+        </thead>
+        <tbody id="step-table-body">
+          <tr>
+            <td colspan="4" class="table-empty">Plot a line to see the step-by-step table.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <span>x, y integers only &middot; midpoint decision parameter, no division in the loop</span>
+</footer>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
